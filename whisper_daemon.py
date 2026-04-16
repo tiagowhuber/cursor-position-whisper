@@ -16,6 +16,7 @@ import signal
 import time
 import logging
 import stat
+import unicodedata
 
 # ── Configuration ──────────────────────────────────────────────────────────────
 SOCKET_PATH  = "/tmp/whisper_daemon.sock"
@@ -179,6 +180,12 @@ class WhisperDaemon:
                 fp16=(self.device == "cuda"),
             )
             text: str = result["text"].strip()
+            # Hotfix: strip accent marks (tildes) and problematic chars
+            text = ''.join(
+                c for c in unicodedata.normalize('NFD', text)
+                if unicodedata.category(c) != 'Mn'
+            )
+            text = text.replace('¿', '')
             log.info("Transcribed: %r", text)
 
             if not text:
