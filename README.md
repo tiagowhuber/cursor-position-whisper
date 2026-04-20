@@ -1,6 +1,6 @@
 # whisper-service
 
-A lightweight voice-input daemon that pre-loads OpenAI Whisper and types transcribed speech at your cursor position. Triggered by a keyboard shortcut.
+A lightweight voice-input daemon that pre-loads OpenAI Whisper and types transcribed speech at your cursor position. Triggered by a keyboard shortcut. Works with AMD and Nvidia graphics cards.
 
 ## How it works
 
