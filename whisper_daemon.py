@@ -139,7 +139,6 @@ class WhisperDaemon:
         )
         self.is_recording = True
         log.info("Recording started (pid %d)", self.recording_proc.pid)
-        notify("Whisper  ●  Recording", "Press Super+Shift+W again to stop")
         return "started"
 
     def _stop_and_transcribe(self) -> str:
@@ -150,7 +149,6 @@ class WhisperDaemon:
         self.recording_proc.wait()
         self.is_recording = False
         log.info("Recording stopped.")
-        notify("Whisper  ◼  Transcribing…")
 
         # Run transcription in a background thread so the hotkey returns fast
         threading.Thread(target=self._transcribe_and_type, daemon=True).start()
@@ -195,7 +193,6 @@ class WhisperDaemon:
             # Brief pause so the window focus is settled after the hotkey press
             time.sleep(0.15)
             self._type_text(text)
-            notify("Whisper  ✔", text[:80] + ("…" if len(text) > 80 else ""))
 
         except Exception as exc:
             log.exception("Transcription error: %s", exc)
